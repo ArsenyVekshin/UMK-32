@@ -1,0 +1,21 @@
+{
+    "name": "KTime",
+    "description": "Comfortable and optimized way to contain time",
+    "keywords": "time",
+    "authors": [
+        {
+            "name": "Arseny Vekshin",
+            "email": "arsvek87@gmail.com",
+            "maintainer": true
+        }
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/k-telecom-devs/K-Telecom_UMK"
+    },
+    "version": "1.0.0",
+    "frameworks": "Arduino",
+    "examples": [
+        "examples/*.pde"
+    ]
+}
