@@ -33,14 +33,14 @@ void ethernetShieldCheck() {
 }
 
 void setup(void) {
-    esp_task_wdt_config_t wdt_config = {
-        .timeout_ms = WDT_TIMEOUT * 1000,                 // Convertin ms
-        .idle_core_mask = (1 << portNUM_PROCESSORS) - 1,  // Bitmask of all cores
-        .trigger_panic = true                             // Enable panic to restart ESP32
-    };
+    // esp_task_wdt_config_t wdt_config = {
+    //     .timeout_ms = WDT_TIMEOUT * 1000,                 // Convertin ms
+    //     .idle_core_mask = (1 << portNUM_PROCESSORS) - 1,  // Bitmask of all cores
+    //     .trigger_panic = true                             // Enable panic to restart ESP32
+    // };
 
-    esp_err_t ESP32_ERROR = esp_task_wdt_init(&wdt_config); 
-    esp_task_wdt_add(NULL);
+    // esp_err_t ESP32_ERROR = esp_task_wdt_init(&wdt_config); 
+    // esp_task_wdt_add(NULL);
 	Serial.begin(115200);
 	Serial.println("Starting");
 
@@ -56,7 +56,7 @@ void setup(void) {
     Serial.println(F("OK"));
 
     //setNetConstants();
-    wdt_reset();
+    //wdt_reset();
 
 	Ethernet.init(ETH_PIN_CS);
 	Ethernet.begin(mac, ip, mask, gate);
@@ -68,7 +68,7 @@ void setup(void) {
 	client.setConnectionTimeout(5000);
 	clientTelnet.setConnectionTimeout(5000);
 
-	wdt_reset();
+	//wdt_reset();
     
     Serial.println(F("Net settings:"));
     Serial.println("\tip:\t" + Ethernet.localIP().toString());

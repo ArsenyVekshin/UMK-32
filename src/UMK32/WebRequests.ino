@@ -4,7 +4,7 @@
 //UMK Style
 void UMKCSS()
 {
-	wdt_reset();
+	//wdt_reset();
 	client.print(F(
 		//"<!--<link rel='preconnect' href='https://fonts.gstatic.com'><link href='https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap' rel='stylesheet'>-->"
 		"<style>"
@@ -81,7 +81,7 @@ void UMKCSS()
 
 void LoginJS()
 {
-	wdt_reset();
+	//wdt_reset();
 	client.print(F(
 		"<!DOCTYPE html>"
 		"<html>"
@@ -156,7 +156,7 @@ void LoginJS()
 
 void MainJS()
 {
-	wdt_reset();
+	//wdt_reset();
 
 	client.print(F(
 	"<!DOCTYPE html>"
@@ -582,7 +582,7 @@ void MainJS()
 }
 
 //void ImageLOGO() {
-//  wdt_reset();
+//  //wdt_reset();
 //  client.print(F("HTTP/1.1 200 OK"
 //	"Content-Type: image/*"
 //  "Connection: close"

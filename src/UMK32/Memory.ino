@@ -19,25 +19,25 @@ public:
 
 minis::minis(int set_adr)
 {
-	wdt_reset();
+	//wdt_reset();
 	adr = set_adr;
 }
 
 String minis::toStr()
 {
-	wdt_reset();
+	//wdt_reset();
 	return text;
 }
 
 void minis::set()
 {
-	wdt_reset();
+	//wdt_reset();
 	EEPROM.put(adr, text);
 }
 
 void minis::reset(String Data)
 {
-	wdt_reset();
+	//wdt_reset();
 	for (unsigned int i = 0; i < 100; i++)
 	{
 		text[i] = NULL;
@@ -49,7 +49,7 @@ void minis::reset(String Data)
 
 void minis::read()
 {
-	wdt_reset();
+	//wdt_reset();
 	EEPROM.get(adr, text);
 }
 
@@ -70,7 +70,7 @@ minis Name(EEPROM_DEVICENAME_ADDR);
 
 void setIP()
 {
-	wdt_reset();
+	//wdt_reset();
 	EEPROM.write(EEPROM_IP_ADDR, Memory.IP[0]);
 	EEPROM.write(EEPROM_IP_ADDR + 1, Memory.IP[1]);
 	EEPROM.write(EEPROM_IP_ADDR + 2, Memory.IP[2]);
@@ -80,7 +80,7 @@ void setIP()
 
 void setMASK()
 {
-	wdt_reset();
+	//wdt_reset();
 	EEPROM.write(EEPROM_MASK_ADDR, Memory.MASK[0]);
 	EEPROM.write(EEPROM_MASK_ADDR + 1, Memory.MASK[1]);
 	EEPROM.write(EEPROM_MASK_ADDR + 2, Memory.MASK[2]);
@@ -90,7 +90,7 @@ void setMASK()
 
 void setGATE()
 {
-	wdt_reset();
+	//wdt_reset();
 	EEPROM.write(EEPROM_GATE_ADDR, Memory.GATE[0]);
 	EEPROM.write(EEPROM_GATE_ADDR + 1, Memory.GATE[1]);
 	EEPROM.write(EEPROM_GATE_ADDR + 2, Memory.GATE[2]);
@@ -100,13 +100,13 @@ void setGATE()
 
 void setTS()
 {
-	wdt_reset();
+	//wdt_reset();
 	EEPROM.put(EEPROM_TIMESET_ADDR, Memory.TimeSET);
 }
 
 void setOther()
 {
-	wdt_reset();
+	//wdt_reset();
 	EEPROM.put(EEPROM_ERRTIMEOUT_ADDR, Memory.errTimeout);
 }
 
@@ -114,7 +114,7 @@ void setOther()
 
 void readIP()
 {
-	wdt_reset();
+	//wdt_reset();
 	Memory.IP[0] = EEPROM.read(EEPROM_IP_ADDR);
 	Memory.IP[1] = EEPROM.read(EEPROM_IP_ADDR + 1);
 	Memory.IP[2] = EEPROM.read(EEPROM_IP_ADDR + 2);
@@ -123,7 +123,7 @@ void readIP()
 
 void readMASK()
 {
-	wdt_reset();
+	//wdt_reset();
 	Memory.MASK[0] = EEPROM.read(EEPROM_MASK_ADDR);
 	Memory.MASK[1] = EEPROM.read(EEPROM_MASK_ADDR + 1);
 	Memory.MASK[2] = EEPROM.read(EEPROM_MASK_ADDR + 2);
@@ -132,7 +132,7 @@ void readMASK()
 
 void readGATE()
 {
-	wdt_reset();
+	//wdt_reset();
 	Memory.GATE[0] = EEPROM.read(EEPROM_GATE_ADDR);
 	Memory.GATE[1] = EEPROM.read(EEPROM_GATE_ADDR + 1);
 	Memory.GATE[2] = EEPROM.read(EEPROM_GATE_ADDR + 2);
@@ -141,19 +141,19 @@ void readGATE()
 
 void readTS()
 {
-	wdt_reset();
+	//wdt_reset();
 	EEPROM.get(EEPROM_TIMESET_ADDR, Memory.TimeSET);
 }
 
 void readOther()
 {
-	wdt_reset();
+	//wdt_reset();
 	EEPROM.get(EEPROM_ERRTIMEOUT_ADDR, Memory.errTimeout);
 }
 
 void resetMemory()
 {
-	wdt_reset();
+	//wdt_reset();
 	Memory.IP[0] = NET_DEFAULT_IP_1;
 	Memory.IP[1] = NET_DEFAULT_IP_2;
 	Memory.IP[2] = NET_DEFAULT_IP_3;
@@ -185,14 +185,14 @@ void resetMemory()
 }
 
 bool isMemoryRaw(){
-	wdt_reset();
+	//wdt_reset();
 	Memory.FLAG = EEPROM.read(0);
 	return Memory.FLAG != 0;
 }
 
 void readMemory()
 {
-	wdt_reset();
+	//wdt_reset();
 	if (isMemoryRaw()) resetMemory();
 
 	readIP();

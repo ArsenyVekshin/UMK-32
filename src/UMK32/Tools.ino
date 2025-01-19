@@ -28,7 +28,7 @@ void(*reset)(void) = 0;
 
 
 String IPstring() {
-	wdt_reset();
+	//wdt_reset();
 	String out = "";
 	out.concat(ip[0]);
 	out.concat(".");
@@ -41,7 +41,7 @@ String IPstring() {
 }
 
 String IPmem() {
-	wdt_reset();
+	//wdt_reset();
 	String out = "";
 	out.concat(Memory.IP[0]);
 	out.concat(".");
@@ -54,7 +54,7 @@ String IPmem() {
 }
 
 String MASKmem() {
-	wdt_reset();
+	//wdt_reset();
 	String out = "";
 	out.concat(Memory.MASK[0]);
 	out.concat(".");
@@ -67,7 +67,7 @@ String MASKmem() {
 }
 
 String GATEmem() {
-	wdt_reset();
+	//wdt_reset();
 	String out = "";
 	out.concat(Memory.GATE[0]);
 	out.concat(".");
@@ -80,19 +80,19 @@ String GATEmem() {
 }
 
 int TIMEOUTmem() {
-	wdt_reset();
+	//wdt_reset();
 	return Memory.errTimeout;
 }
 
 String PWmem() {
-	wdt_reset();
+	//wdt_reset();
 	String out = "";
 	//out.concat(Memory.PW);
 	return out;
 }
 
 String TimeString(unsigned long T) {
-	wdt_reset();
+	//wdt_reset();
 	if (T != (unsigned int)-1) {
 		String out = "";
 
@@ -122,7 +122,7 @@ String TimeString(unsigned long T) {
 }
 
 int inRange(int min, int Val, int max) {
-	wdt_reset();
+	//wdt_reset();
 	int res = 0;
 	if ((Val > min) && (Val < max)) res = 1;
 	return res;

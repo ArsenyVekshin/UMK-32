@@ -1,9 +1,12 @@
 void loop(void) {
 
     sensor_loop();
-    wdt_reset();
+    Timer();
+    //wdt_reset();
 
     WebServer();
-	wdt_reset();
+	//wdt_reset();
 	Timer();
+
+
 }

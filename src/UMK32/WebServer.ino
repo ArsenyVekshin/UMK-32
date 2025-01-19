@@ -3,7 +3,7 @@ constexpr unsigned int WEB_DATA_LIMIT = 250;
 
 void WebServer()
 {
-	wdt_reset();
+	//wdt_reset();
 	client = Web.available();
 	//FIXME Добавь защиту!!!
 
@@ -57,8 +57,7 @@ void WebServer()
 					}
 					else if (getRequest.startsWith("/pass=" +
 												   PW.toStr() + "/sensor")) SensorJS();
-					else if (getRequest.startsWith("/pass=" +
-												   PW.toStr() + "/command"))
+					else if (getRequest.startsWith("/pass=" + PW.toStr() + "/command"))
 						CommandJS();
 					else if (getRequest.startsWith("/pass=" +
 												   PW.toStr() + "/net")) NetJS();
@@ -78,7 +77,7 @@ void WebServer()
 
 String CutString(String SData, String Begin, int x)
 {
-	wdt_reset();
+	//wdt_reset();
 	SData = SData.substring(SData.indexOf(Begin), SData.length());
 	SData = SData.substring(SData.indexOf("=") + x,
 							SData.indexOf("&"));
@@ -92,7 +91,7 @@ String CutString(String SData, String Begin, int x)
 
 void HTTP()
 {
-	wdt_reset();
+	//wdt_reset();
 	client.println(F("HTTP/1.1 200 OK"));
 	client.println(F("Content-Type: text/html"));
 	client.println(F("Connection: close"));
@@ -101,7 +100,7 @@ void HTTP()
 
 void CheckPassJS()
 {
-	wdt_reset();
+	//wdt_reset();
 	const String getPW = CutString(WebData, F("/checkpass="), 1);
 	if (getPW == PW.toStr())
 	{
@@ -117,7 +116,7 @@ void CheckPassJS()
 
 void SensorJS()
 {
-	wdt_reset();
+	//wdt_reset();
 	const int spart = CutString(WebData, F("spart="), 1).toInt();
 	const int dpart = CutString(WebData, F("dpart="), 1).toInt();
 	client.print("WT=Time: " + centralTime.ToString());
@@ -132,7 +131,7 @@ void SensorJS()
 
 void CommandJS()
 {
-	wdt_reset();
+	//wdt_reset();
 
 	// DEBUG_PRINTLN(CutString(WebData, F("command="), 1) + " " +
 	// 			  CutString(WebData, F("value1="), 1) + " " +
@@ -147,7 +146,7 @@ void CommandJS()
 
 void toLoginJS()
 {
-	wdt_reset();
+	//wdt_reset();
 	client.print(F(
 		"<!DOCTYPE html>"
 		"<html>"
@@ -160,14 +159,14 @@ void toLoginJS()
 
 void ResetJS()
 {
-	wdt_reset();
+	//wdt_reset();
 	client.println(F("ok"));
 	delay(1000);
 }
 
 void FallJS()
 {
-	wdt_reset();
+	//wdt_reset();
 	resetMemory();
 
 	client.println("ip=" + IPmem() + "&");
@@ -179,7 +178,7 @@ void FallJS()
 
 void NetJS()
 {
-	wdt_reset();
+	//wdt_reset();
 	StringToIP(CutString(WebData, F("ip="), 0));
 	if (ResultIP[0] != 0)
 	{
@@ -226,7 +225,7 @@ void NetJS()
 
 void SnmpSensorsJSON()
 {
-	wdt_reset();
+	//wdt_reset();
 	client.println(F("HTTP/1.1 200 OK"));
 	client.println(F("Content-Type: application/json"));
 	client.println(F("Connection: close"));
@@ -235,7 +234,7 @@ void SnmpSensorsJSON()
 	bool flag = false;
 	for (byte i = 0; i < SENSORS_MAX; i++)
 	{
-		wdt_reset();
+		//wdt_reset();
 		if (sensors[i].IsNull()) continue;
 
 		if (!flag) flag = true;
@@ -252,7 +251,7 @@ void SnmpSensorsJSON()
 
 void SnmpDeltasJSON()
 {
-	wdt_reset();
+	//wdt_reset();
 	client.println(F("HTTP/1.1 200 OK"));
 	client.println(F("Content-Type: application/json"));
 	client.println(F("Connection: close"));
@@ -261,7 +260,7 @@ void SnmpDeltasJSON()
 	bool flag = false;
 	for (byte i = 0; i < DELTAS_MAX; i++)
 	{
-		wdt_reset();
+		//wdt_reset();
 		if (deltas[i].IsNull()) continue;
 
 		if (!flag) flag = true;
@@ -278,7 +277,7 @@ void SnmpDeltasJSON()
 
 void LogJSON()
 {
-	wdt_reset();
+	//wdt_reset();
 	client.println(F("HTTP/1.1 200 OK"));
 	client.println(F("Content-Type: application/json"));
 	client.println(F("Connection: close"));

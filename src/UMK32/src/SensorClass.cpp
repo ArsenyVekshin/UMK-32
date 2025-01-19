@@ -26,17 +26,17 @@ float Sensor::readCurrSensor(OneWire &wire, const byte _addr[8]) {
 			Serial.println(F("Device is not a DS18x20 family device."));
 			return SENS_ERR_VALUE;
 	}
-
+	
+	wire.reset();
 	wire.select(_addr);
-
 	wire.write(0x44, 1);	// start conversion, with parasite power on at the end
-	// delay(SENS_READ_DELAY);
+	delay(SENS_READ_DELAY);
 
 	present = wire.reset();
 	wire.select(_addr);
 	wire.write(0xBE); // Read Scratchpad
 
-	for (byte i = 0; i < 12; i++) {
+	for (byte i = 0; i < 9; i++) {
 		data[i] = wire.read();
 	}
 
