@@ -206,10 +206,15 @@ void Sensor::Save(int startPoint) const
 	EEPROM.put(startPoint, sensor.addr);
 	startPoint += 8 * sizeof(byte);
 
-	char _name[sens_name_length] = { ' ' };
-	for (byte i = 0; i < sensor.name.length(); i++)
-		_name[i] = sensor.name[i];
-	EEPROM.put(startPoint, _name);
+
+	for (byte i = 0; i < sens_name_length; i++) {
+		if(i<sensor.name.length()) 
+			EEPROM.write(startPoint + i, sensor.name[i]);
+		else 
+			EEPROM.write(startPoint + i, 0);
+	}
+
+	EEPROM.commit();
 }
 
 void Sensor::Load(int startPoint)
@@ -226,8 +231,9 @@ void Sensor::Load(int startPoint)
 	EEPROM.get(startPoint, sensor.addr);
 	startPoint += 8 * sizeof(byte);
 
-	char _name[sens_name_length];
+	char _name[sens_name_length] = { 0 };
 	EEPROM.get(startPoint, _name);
+
 	sensor.name = String(_name);
 	sensor.name.trim();
 }

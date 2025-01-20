@@ -22,8 +22,10 @@
 #define NET_DEFAULT_GATEWAY_4 1
 
 // LIMITS
-#define SENSORS_MAX 32
+#define SENSORS_MAX 16
 #define DELTAS_MAX 16
+#define NAMES_MAX_LEN 10
+
 
 // OTHER
 #define SENS_ERR_VALUE -255.0 // не входит в рабочий диапазон температур 
@@ -54,14 +56,13 @@
 #define EEPROM_PASSWORD_ADDR 100
 #define EEPROM_DEVICENAME_ADDR 200
 
-#define EEPROM_DELTAS_START_ADDR 400
+#define EEPROM_DELTAS_START_ADDR 2000
 #define EEPROM_SENSORS_START_ADDR 1000
-
+#define EEPROM_SIZE 3000
 
 
 // PINOUT
 #define SENS_PINS_NUM 2
-//const int sensor_pins[SENS_PINS_NUM] = {32, 33};
 
 #define ETH_PIN_CS 5
 

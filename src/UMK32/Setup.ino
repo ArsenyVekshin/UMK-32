@@ -44,6 +44,10 @@ void setup(void) {
 	Serial.begin(115200);
 	Serial.println("Starting");
 
+    if (!EEPROM.begin(EEPROM_SIZE)) {
+        Serial.println("Ошибка инициализации EEPROM");
+    }
+
     if(isMemoryRaw()) {
         Serial.print(F("EEPROM status: RAW. \n\tMemory markup:"));
         resetMemory();
@@ -79,5 +83,8 @@ void setup(void) {
     Serial.print(F("Sensors settings read: "));
     sensor_setup();
     Serial.println(F("OK"));
+
+    Serial.println("Sensors init states: ");
+	printTables();
 
 }

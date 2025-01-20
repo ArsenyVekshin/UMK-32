@@ -81,6 +81,7 @@ void readSensors() {
 			}
 		}
 	}
+	SaveConfigs();
 	//Serial.println("Done");
 	//wdt_reset();
 }
@@ -191,12 +192,12 @@ void SaveConfigs() {
 		addr = EEPROM_SENSORS_START_ADDR + structSize * i;
 		sensors[i].Save(addr);
 	}
-	//wdt_reset();
 
+	//wdt_reset();
 	addr = EEPROM_DELTAS_START_ADDR;
 	structSize = Delta::GetStructSize();
 	for (byte i = 0; i < DELTAS_MAX; i++) {
-		addr = EEPROM_SENSORS_START_ADDR + structSize * i;
+		addr = EEPROM_DELTAS_START_ADDR + structSize * i;
 		deltas[i].Save(addr);
 	}
 	//wdt_reset();
@@ -281,7 +282,7 @@ void printTables(){
 		Serial.println(sensors[i].GetWarnTime()->ToString());
 		}
 
-	Serial.println("\n\nDELTAS");
+	Serial.println("\nDELTAS");
 	for (byte i = 0; i < DELTAS_MAX; i++) {
 		if(deltas[i].IsNull()) continue;
 		Serial.println(deltas[i].ToString(i+1));
@@ -299,6 +300,7 @@ void sensor_setup()
 	LoadConfigs();
 	fixNamesAtributes();
 	fixMinMaxAtributes();
+
 	//wdt_reset();
 }
 
@@ -312,6 +314,7 @@ void sensor_loop()
 		//wdt_reset();
 
 		printTables();
+
 	}
 	//wdt_reset();
 }

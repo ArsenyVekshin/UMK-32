@@ -102,12 +102,14 @@ void setTS()
 {
 	//wdt_reset();
 	EEPROM.put(EEPROM_TIMESET_ADDR, Memory.TimeSET);
+	EEPROM.commit();
 }
 
 void setOther()
 {
 	//wdt_reset();
 	EEPROM.put(EEPROM_ERRTIMEOUT_ADDR, Memory.errTimeout);
+	EEPROM.commit();
 }
 
 

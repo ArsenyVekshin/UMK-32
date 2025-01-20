@@ -204,17 +204,6 @@ void Delta::FixMinMax()
 
 void Delta::Save(int startPoint) const
 {
-	char _name[delta_name_length];
-	const char *tmp1 = delta.name.c_str();
-	for (byte i = 0; i < delta_name_length; i++)
-	{
-		if (i < delta.name.length())
-			_name[i] = tmp1[i];
-		else _name[i] = ' ';
-	}
-	EEPROM.put(startPoint, _name);
-	startPoint += delta_name_length;
-
 	byte tmp2 = delta.sens1 ? delta.sens1->GetNum() : 0;
 	EEPROM.put(startPoint, tmp2);
 	startPoint += 1;
@@ -228,16 +217,19 @@ void Delta::Save(int startPoint) const
 
 	EEPROM.put(startPoint, delta.maxTemp);
 	startPoint += 2;
+
+	for (byte i = 0; i < delta_name_length; i++) {
+		if(i<delta.name.length()) 
+			EEPROM.write(startPoint + i, delta.name[i]);
+		else 
+			EEPROM.write(startPoint + i, 0);
+	}
+
+	EEPROM.commit();
 }
 
 void Delta::Load(int startPoint, byte *num)
 {
-	char _dName[delta_name_length];
-	EEPROM.get(startPoint, _dName);
-	delta.name = String(_dName);
-	delta.name.trim();
-	startPoint += delta_name_length; // sizeof(delta.name)
-
 	EEPROM.get(startPoint, num[0]);
 	startPoint += 1; 
 
@@ -249,4 +241,9 @@ void Delta::Load(int startPoint, byte *num)
 
 	EEPROM.get(startPoint, delta.maxTemp);
 	startPoint += 2;
+
+	char _name[delta_name_length] = { 0 };
+	EEPROM.get(startPoint, _name);
+	delta.name = String(_name);
+	delta.name.trim();
 }
