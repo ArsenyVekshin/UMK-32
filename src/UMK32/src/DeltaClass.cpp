@@ -4,7 +4,7 @@
 Delta::Delta(byte num, KTime *timer) : delta(timer)
 {
 	this->timer = timer;
-	SetDefaults(num, timer);
+	SetDefault(num, timer);
 }
 
 void Delta::SetName(String &name)
@@ -37,7 +37,7 @@ void Delta::SetWarnTime(KTime warnTime)
 	delta.warnTime = warnTime;
 }
 
-void Delta::SetDefaults(byte num, KTime *timer)
+void Delta::SetDefault(byte num, KTime *timer)
 {
 	SetName("delta" + String(num)); // name
 	SetSens1(nullptr);	// sens number 1

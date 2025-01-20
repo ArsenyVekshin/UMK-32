@@ -18,7 +18,7 @@ public:
 	void SetMinTemp(int minTemp);
 	void SetMaxTemp(int maxTemp);
 	void SetWarnTime(KTime warnTime);
-	void SetDefaults(byte num, KTime *timer);
+	void SetDefault(byte num, KTime *timer);
 
 	boolean IsNull() const;
 

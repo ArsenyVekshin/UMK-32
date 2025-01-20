@@ -40,14 +40,14 @@ void readSensors() {
 			sensors[i].SetStatus(SENS_STATUS_ERROR);
 	}
 
-	Serial.print("Sensors reading:");
+	//Serial.print("Sensors reading:");
 
 	for (byte i=0; i<SENS_PINS_NUM; i++) {
 		OneWire wire(sensor_pins[i]);
 		//wdt_reset();
 
 		for (byte j=0; j<SENSORS_MAX; j++) {\
-			Serial.print(".");
+			//Serial.print(".");
 			//wdt_reset();
 			Timer();
 			byte addr[8];
@@ -81,7 +81,7 @@ void readSensors() {
 			}
 		}
 	}
-	Serial.println("Done");
+	//Serial.println("Done");
 	//wdt_reset();
 }
 
@@ -141,7 +141,7 @@ void createDelta(int sens1, int sens2) {
 	if (delta_id == -1) return;
 
 	//wdt_reset();
-	deltas[delta_id].SetDefaults(delta_id + 1, &centralTime);
+	deltas[delta_id].SetDefault(delta_id + 1, &centralTime);
 	deltas[delta_id].SetSens1(&sensors[sens1]);
 	deltas[delta_id].SetSens2(&sensors[sens2]);
 
@@ -228,7 +228,7 @@ void Reset_configs(String type = "all") {
 	//wdt_reset();
 	if (type == F("deltas") || type == F("all")) {
 		for (byte i = 0; i < DELTAS_MAX; i++) {
-			deltas[i].SetDefaults(i + 1, &centralTime);
+			deltas[i].SetDefault(i + 1, &centralTime);
 		}
 	}
 	//wdt_reset();
@@ -260,6 +260,34 @@ void fixMinMaxAtributes() {
 
 #pragma endregion
 
+void printTables(){
+	Serial.println("SENSORS:");
+	for (byte i = 0; i < SENSORS_MAX; i++) {
+		if(sensors[i].IsNull()) continue;
+		Serial.print(sensors[i].GetNum());
+		Serial.print("\t");
+		Serial.print(sensors[i].GetTextAddr());
+		Serial.print("\t");
+		Serial.print(sensors[i].GetName());
+		Serial.print("\t");
+		Serial.print(sensors[i].GetStatusCode());
+		Serial.print("\t");
+		Serial.print(sensors[i].GetTemp());
+		Serial.print("\t");
+		Serial.print(sensors[i].GetMinTemp());
+		Serial.print("\t");
+		Serial.print(sensors[i].GetMaxTemp());
+		Serial.print("\t");
+		Serial.println(sensors[i].GetWarnTime()->ToString());
+		}
+
+	Serial.println("\n\nDELTAS");
+	for (byte i = 0; i < DELTAS_MAX; i++) {
+		if(deltas[i].IsNull()) continue;
+		Serial.println(deltas[i].ToString(i+1));
+		}
+}
+
 void sensor_setup()
 {
 	for (byte i = 0; i < SENSORS_MAX; i++)
@@ -274,23 +302,16 @@ void sensor_setup()
 	//wdt_reset();
 }
 
+
 void sensor_loop()
 {
 	if (sensorsTimer >= SENS_READ_PERIOD) {
 		sensorsTimer = 0;
 		readSensors(); //Считываем все подключенные датчики
+		updateWarnTimes();
 		//wdt_reset();
 
-		for (byte i = 0; i < SENSORS_MAX; i++) {
-			if(sensors[i].IsNull()) continue;
-			Serial.print(sensors[i].GetNum());
-			Serial.print("\t");
-			Serial.print(sensors[i].GetTextAddr());
-			Serial.print("\t");
-			Serial.print(sensors[i].GetStatusCode());
-			Serial.print("\t");
-			Serial.println(sensors[i].GetTemp());
-		}
+		printTables();
 	}
 	//wdt_reset();
 }

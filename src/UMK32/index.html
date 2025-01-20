@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset=\"UTF-8\">
+    <meta name=\"viewport\" content=\"width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0\">
+    <title>UMK - Авторизация</title>
+    <style>
+        :root {--dark-bg:#515151;--darker-bg:#414141;--light-text:#fff;--lighter-text:#ddd;--dark-text:#353535;--darker-text:#222;--font:'ShareTechMono',monospace;}* {font-family:var(--font);font-size:16px;color:var(--light-text);margin:0;padding:0;}.f-break {flex-basis:100%;height:0;}.wrapper {display:flex;flex-wrap:wrap;flex-basis:100vw;justify-content:center;align-content:flex-start;min-height:100vh;background:var(--darker-bg)linear-gradient(45deg,var(--darker-bg)42%,var(--dark-bg)100%);}.menu {display:flex;flex-basis:100%;height:45px;}.menu > .left, .right {display:flex;flex-basis:100%;height:100%;align-content:center;align-items:center;}.menu > .left,.right > * {margin:5px;color:var(--light-text);text-decoration:none;}.menu > .right {flex-grow:1;justify-content:flex-end;}.menu > .left {justify-content:flex-start;}.menu > .left > .logo {height:88.89%;}.menu > .left > .logo * {height:100%;}.content {display:flex;flex-wrap:wrap;justify-content:center;margin-top:10px;}.content > section {}
+    </style>
+    <style>.table {position:relative;}.table > .title {font-weight:bold;background-color:gray !important;grid-template-columns: 100% !important;}.table > .extra-buttons {position:absolute;display:flex;margin-top:2px;}.table > .extra-buttons > input {height: 24px;width: 24px;color: var(--dark-text);}.table > .row {line-height:24px;display:grid;grid-template-rows:max-content;grid-gap:0px;width:100%;background-color:darkgray;}.table > .row.err {background-color: #e85959 !important;}.table > .row .table-input {width:100%;height:100%;padding:0;margin:0;border:none;background:none;}.table > .row > div {border:#222222 solid 2px;border-right-width:0;border-bottom-width:0;color:var(--light-text);;}.table > .row > div > * {max-width:98%;color:var(--light-text);padding:1px 10px;}.table > .row > div:last-child {border-right-width:2px;}.table > .row:last-child > div {border-bottom-width:2px;}.table > .row.shownrow:nth-of-type(4n) {background-color:lightgray;}.table > .row.shownrow:nth-of-type(4n) > div {color:var(--darker-text);}
+    .table > .row.shownrow:nth-of-type(4n) > div > * {color:var(--darker-text);}.table > .row:first-child {border-top-left-radius:5px;border-top-right-radius:5px;}.table > .row:last-child {border-bottom-left-radius:5px;border-bottom-right-radius:5px;}.table > .row:first-child > div:first-child {border-top-left-radius:5px;}.table > .row:first-child > div:last-child {border-top-right-radius:5px;}.table > .row:last-child > div:last-child {border-bottom-right-radius:5px;}.table > .row:last-child > div:first-child {border-bottom-left-radius:5px;}.temperature-table > .row {grid-template-columns:27px 144px 90px 90px 72px 54px 54px 126px;}.deltas-table > .row {grid-template-columns:27px 90px 90px 90px 72px 54px 54px 126px;}.settings {height:210px;max-width:220px;min-width:220px;display:flex;flex-wrap:wrap;justify-content:center;align-items:stretch;flex-basis:calc(20% - 5px);color:black;}.settings * {color:black;}.dnone {display: none !important;}
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <div id="content" class="content">
+        <div class="table temperature-table">
+        <div class="row title"
+<div>Датчики</div></div><div class=\"row\"><div class=\"id\">N</div><div class=\"address\">Адрес</div><div class=\"state\">Состояние</div><div class=\"name\">Название</div>
+        <div class=\"temperature\">Темп.</div><div class=\"min-temp\">Мин.</div><div class=\"max-temp\">Макс.</div><div class=\"err-time\">Время ошибки</div></div></div><div class=\"settings\">

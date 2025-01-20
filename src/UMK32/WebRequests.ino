@@ -228,7 +228,8 @@ void MainJS()
 				"}"
 				".table > .row.shownrow:nth-of-type(4n) > div {"
 					"color:var(--darker-text);"
-				"}"
+				"}"));
+				client.print(F(
 				".table > .row.shownrow:nth-of-type(4n) > div > * {"
 					"color:var(--darker-text);"
 				"}"
@@ -428,10 +429,12 @@ void MainJS()
 							//"console.info('SendCommand: type=' + type + '&value1=' + value1 + '&value2=' + value2 + '&value3=' + value3  + '&');"
 						"}"
 
-						"function CombineSensors(sensors_json,part = 0,psize = 15) {"
+						"function CombineSensors(sensors_json,part = 0, psize = 15) {"
 							"let sensors = JSON.parse(sensors_json);"
-							"let result = \"\";"
-								"let cur_sens = document.getElementById(\"row-template-sensors\");"
+							"let result = \'\' ;"
+							));
+							client.print(F(
+							"let cur_sens = document.getElementById(\"row-template-sensors\");"
 							"for(let i = 0; i < psize; i++) {"
 								"if (i < sensors.length) {"
 									"cur_sens.getElementsByClassName(\"row\")[0].classList.remove(\"dnone\");"
@@ -472,8 +475,8 @@ void MainJS()
 							"}"
 							"let si = typeof t_table.getElementsByClassName(\"row\")[(part-1)*psize+skip-1] == \"undefined\" ? t_table.getElementsByClassName(\"row\").length-1 : (part-1)*psize+skip-1;"
 							"t_table.getElementsByClassName(\"row\")[si].insertAdjacentHTML(\"afterend\", result);"
-						"}"
-
+						"}"));
+						client.print(F(
 						"function CombineDeltas(deltas_json,part = 1,psize = 15) {"
 							"let deltas = JSON.parse(deltas_json);"
 							"let result = \"\";"

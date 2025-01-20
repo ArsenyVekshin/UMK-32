@@ -57,8 +57,8 @@ void WebServer()
 					}
 					else if (getRequest.startsWith("/pass=" +
 												   PW.toStr() + "/sensor")) SensorJS();
-					else if (getRequest.startsWith("/pass=" + PW.toStr() + "/command"))
-						CommandJS();
+					// else if (getRequest.startsWith("/pass=" + PW.toStr() + "/command"))
+					// 	CommandJS();
 					else if (getRequest.startsWith("/pass=" +
 												   PW.toStr() + "/net")) NetJS();
 					else if (getRequest.startsWith("/pass=" +
@@ -138,10 +138,12 @@ void CommandJS()
 	// 			  CutString(WebData, F("value2="), 1) + " " +
 	// 			  CutString(WebData, F("value3="), 1), 7);
 
-	// Redact_config_data(CutString(WebData, F("command="), 1),
-	// 				   CutString(WebData, F("value1="), 1),
-	// 				   CutString(WebData, F("value2="), 1),
-	// 				   CutString(WebData, F("value3="), 1));
+
+
+	doOperation(CutString(WebData, F("command="), 1),
+				CutString(WebData, F("value1="), 1),
+				CutString(WebData, F("value2="), 1),
+				CutString(WebData, F("value3="), 1));
 }
 
 void toLoginJS()
