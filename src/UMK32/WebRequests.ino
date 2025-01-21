@@ -1,7 +1,3 @@
-#undef DEBUG
-#define DEBUG 0
-
-//UMK Style
 void UMKCSS()
 {
 	//wdt_reset();
@@ -106,7 +102,10 @@ void LoginJS()
 						"color:var(--dark-text);"
 					"}"
 					"#login > label:last-child {"
+						"display: flex;"
 						"justify-content:center;"
+						"align-self: flex-start;"
+						"color: transparent"
 					"}"
 					"#login > label > input[type=\"submit\"] {"
 						"display:flex;"
@@ -124,14 +123,14 @@ void LoginJS()
 				"<div class=\"wrapper\">"
 					"<div id=\"content\" class=\"content\">"));
 						client.print(F(
-						"<form onsubmit=\"onLoginSubmit(); return false;\" method=\"post\" id=\"login\">"
-							"<h1>Авторизация</h1>"
+						"<form class='form' onsubmit=\"onLoginSubmit(); return false;\" method=\"post\" id=\"login\">"
+							"<h1  style='align-self: center;'>Авторизация</h1>"
 							"<p class=\"f-break\"></p>"));
 							client.print("<label>IP: <input name='login' id='ip' size='15' value='" + IPstring() + "' type='text'></label>");
 							client.print(F("<p class=\"f-break\"></p>"
 							"<label>Пароль: <input name=\"password\" id='pass' size='15' type='password'></label>"
 							"<p class=\"f-break\"></p>"
-							"<label><input type=\"submit\" value=\"Войти\"></label>"
+							"<label>Пароль: <input type=\"submit\" value=\"Войти\"></label>"
 						"</form>"
 					"</div>"
 					"<script>"));
@@ -228,8 +227,7 @@ void MainJS()
 				"}"
 				".table > .row.shownrow:nth-of-type(4n) > div {"
 					"color:var(--darker-text);"
-				"}"));
-				client.print(F(
+				"}"
 				".table > .row.shownrow:nth-of-type(4n) > div > * {"
 					"color:var(--darker-text);"
 				"}"
@@ -254,11 +252,12 @@ void MainJS()
 					"border-bottom-left-radius:5px;"
 				"}"
 				".temperature-table > .row {"
-					"grid-template-columns:27px 144px 90px 90px 72px 54px 54px 126px;"
+					"grid-template-columns:27px 164px 45px 90px 72px 36px 40px 126px 65px;"
 				"}"
 				".deltas-table > .row {"
-					"grid-template-columns:27px 90px 90px 90px 72px 54px 54px 126px;"
+					"grid-template-columns:27px 90px 90px 90px 72px 54px 54px 126px 65px;"
 				"}"
+				".deltas-table.table {margin-top: 50px;}"
 				".settings {"
 					"height:210px;"
 					"max-width:220px;"
@@ -276,6 +275,8 @@ void MainJS()
 				".dnone {display: none !important;}"
 			"</style>"
 		"</head>"
+			));
+			client.print(F(
 		"<body>"
 			"<div class=\"wrapper\">"
 				"<div id=\"content\" class=\"content\">"
@@ -287,13 +288,14 @@ void MainJS()
 						"<div class=\"row\">"
 							"<div class=\"id\">N</div>"
 							"<div class=\"address\">Адрес</div>"
-							"<div class=\"state\">Состояние</div>"
+							"<div class=\"state\">Сост.</div>"
 							"<div class=\"name\">Название</div>"));
 							client.print(F(
 							"<div class=\"temperature\">Темп.</div>"
 							"<div class=\"min-temp\">Мин.</div>"
 							"<div class=\"max-temp\">Макс.</div>"
 							"<div class=\"err-time\">Время ошибки</div>"
+							//"<div class=\"timeout-value\">Timeout</div>"
 						"</div>"
 					"</div>"
 					"<div class=\"settings\">"));
@@ -335,6 +337,7 @@ void MainJS()
 							"<div class=\"min-temp\">Мин.</div>"
 							"<div class=\"max-temp\">Макс.</div>"
 							"<div class=\"err-time\">Время ошибки</div>"
+							//"<div class=\"timeout-value\">Timeout</div>"
 						"</div>"
 					"</div>"
 					"<div class='f-break'></div>"
@@ -346,6 +349,8 @@ void MainJS()
 							"<div class=\"id\">"
 								"<input title=\"Введите номер датчика(1-32) с которым хотите произвести замену\" class=\"table-input\" onfocus=\"WebUpdate('off')\" onchange=\"SendCommand('sensor_num',this.getAttribute('sensid'),this.value);WebUpdate('on')\">"
 							"</div>"
+						));
+						client.print(F(
 							"<div class=\"address\"></div>"
 							"<div class=\"state\">"
 								"<input title=\"on - включен, off - выключен, X - не найден или ошибка\" class=\"table-input\" onfocus=\"WebUpdate('off')\" onchange=\"SendCommand('sensor_status',this.getAttribute('sensid'),this.value);WebUpdate('on')\">"
@@ -363,8 +368,14 @@ void MainJS()
 							"<div class=\"err-time\">"
 								"Время ошибки"
 							"</div>"
+							//input for sensor-timeout
+							//"<div class=\"timeout-value\">"
+							//	"<input title=\"Timeout\" class=\"table-input\" onfocus=\"WebUpdate('off')\" onchange=\"SendCommand('sensor_timeout',this.getAttribute('sensid'),this.value);WebUpdate('on')\">"
+							//"</div>"
 						"</div>"
 					"</div>"
+						));
+						client.print(F(
 					"<div style=\"display:none\" id=\"row-template-deltas\">"
 						"<div class=\"extra-buttons\" style=\"right:-24px;\">"
 							"<input title=\"Удалить\" type=\"button\" onclick=\"SendCommand('delta_del',this.getAttribute('deltasid'));\" value=\"🗑\">"
@@ -394,6 +405,8 @@ void MainJS()
 							"</div>"
 						"</div>"
 					"</div>"
+						));
+						client.print(F(
 					"<script>"
 						"GetData();"
 						"let updateInterval = setInterval('GetData();',1500);"
@@ -418,23 +431,23 @@ void MainJS()
 							"dpart = Number(CutString(text,'dpart=',1));"
 							"psize = Number(CutString(text,'psize=',1));"
 							"WT.innerHTML = ' ' + CutString(text,'WT=',1);"
+
 							"CombineSensors(CutString(text,'sensors=',1),spart,psize);"
 							"CombineDeltas(CutString(text,'deltas=',1),dpart,psize);"
 						"}"
 
-						"async function SendCommand(type = '', value1 = '', value2 = '', value3 = '') {"));
+						"async function SendCommand(type = '', value1 = '', value2 = '', value3 = '') {"
+							"console.info('SendCommand: type=' + type + '&value1=' + value1 + '&value2=' + value2 + '&value3=' + value3  + '&' + value3);"	
+							));
 							client.print("let get = await fetch('/pass=" + PW.toStr() + "/command=' + type + '&value1=' + value1 + '&value2=' + value2 + '&value3=' + value3 + '&');");
 							client.print(F("let text = await get.text();"
-							//"console.log(text);"
-							//"console.info('SendCommand: type=' + type + '&value1=' + value1 + '&value2=' + value2 + '&value3=' + value3  + '&');"
+							"console.info('SendCommand: type=' + type + '&value1=' + value1 + '&value2=' + value2 + '&value3=' + value3  + '&');"
 						"}"
 
-						"function CombineSensors(sensors_json,part = 0, psize = 15) {"
+						"function CombineSensors(sensors_json,part = 0,psize = 15) {"
 							"let sensors = JSON.parse(sensors_json);"
-							"let result = \'\' ;"
-							));
-							client.print(F(
-							"let cur_sens = document.getElementById(\"row-template-sensors\");"
+							"let result = \"\";"
+								"let cur_sens = document.getElementById(\"row-template-sensors\");"
 							"for(let i = 0; i < psize; i++) {"
 								"if (i < sensors.length) {"
 									"cur_sens.getElementsByClassName(\"row\")[0].classList.remove(\"dnone\");"
@@ -449,7 +462,9 @@ void MainJS()
 									"cur_sens.getElementsByClassName(\"min-temp\")[0].getElementsByClassName(\"table-input\")[0].setAttribute(\"sensid\",sensors[i].id);"
 									"cur_sens.getElementsByClassName(\"max-temp\")[0].getElementsByClassName(\"table-input\")[0].setAttribute(\"sensid\",sensors[i].id);"
 									"cur_sens.getElementsByClassName(\"extra-buttons\")[0].getElementsByTagName(\"input\")[0].setAttribute(\"sensid\",sensors[i].id);"
-									
+							));
+							client.print(F(
+
 									"cur_sens.getElementsByClassName(\"id\")[0].getElementsByClassName(\"table-input\")[0].setAttribute(\"value\",sensors[i].id+\"\");"
 									"cur_sens.getElementsByClassName(\"address\")[0].innerHTML = sensors[i].a+\"\";"
 									"cur_sens.getElementsByClassName(\"state\")[0].getElementsByClassName(\"table-input\")[0].setAttribute(\"value\",sensors[i].s+\"\");"
@@ -475,8 +490,8 @@ void MainJS()
 							"}"
 							"let si = typeof t_table.getElementsByClassName(\"row\")[(part-1)*psize+skip-1] == \"undefined\" ? t_table.getElementsByClassName(\"row\").length-1 : (part-1)*psize+skip-1;"
 							"t_table.getElementsByClassName(\"row\")[si].insertAdjacentHTML(\"afterend\", result);"
-						"}"));
-						client.print(F(
+						"}" ));
+							client.print(F(
 						"function CombineDeltas(deltas_json,part = 1,psize = 15) {"
 							"let deltas = JSON.parse(deltas_json);"
 							"let result = \"\";"
@@ -498,6 +513,8 @@ void MainJS()
 									"cur_deltas.getElementsByClassName(\"extra-buttons\")[0].getElementsByTagName(\"input\")[0].setAttribute(\"deltasid\", deltas[i].id);"
 									"cur_deltas.getElementsByClassName(\"sens1\")[0].getElementsByClassName(\"table-input\")[0].setAttribute(\"value\",deltas[i].s1+\"\");"
 									"cur_deltas.getElementsByClassName(\"sens2\")[0].getElementsByClassName(\"table-input\")[0].setAttribute(\"value\",deltas[i].s2+\"\");"
+								));
+								client.print(F(
 									
 									"cur_deltas.getElementsByClassName(\"id\")[0].getElementsByClassName(\"table-input\")[0].setAttribute(\"value\",deltas[i].id+\"\");"
 									"cur_deltas.getElementsByClassName(\"name\")[0].getElementsByClassName(\"table-input\")[0].setAttribute(\"value\",deltas[i].n+\"\");"
@@ -505,6 +522,7 @@ void MainJS()
 									"cur_deltas.getElementsByClassName(\"min-temp\")[0].getElementsByClassName(\"table-input\")[0].setAttribute(\"value\",deltas[i].min+\"\");"
 									"cur_deltas.getElementsByClassName(\"max-temp\")[0].getElementsByClassName(\"table-input\")[0].setAttribute(\"value\",deltas[i].max+\"\");"
 									"cur_deltas.getElementsByClassName(\"err-time\")[0].innerHTML = deltas[i].e+\"\";"
+									
 								"} else {"
 									"cur_deltas.getElementsByClassName(\"row\")[0].classList.add(\"dnone\");"
 									"cur_deltas.getElementsByClassName(\"extra-buttons\")[0].classList.add(\"dnone\");"
@@ -525,9 +543,10 @@ void MainJS()
 							client.print(F(
 							"}"
 							"let si = typeof d_table.getElementsByClassName(\"row\")[(part-1)*psize+skip-1] == \"undefined\" ? d_table.getElementsByClassName(\"row\").length-1 : (part-1)*psize+skip-1;"
-							"d_table.getElementsByClassName(\"row\")[si].insertAdjacentHTML(\"afterend\", result);"));
+							"d_table.getElementsByClassName(\"row\")[si].insertAdjacentHTML(\"afterend\", result);"
+						"}"));
 						client.print(F(
-						"}"
+						
 
 						"async function NET() {"));
 							client.print(" let get = await fetch('/pass=" + PW.toStr() + "/net&ip=' + ip.value + '&mask=' + mask.value + '&gate=' + gate.value + '&newpass=' + pass.value + '&name=' + myname.value + '&timeout=' + errTimeout.value + '&');");
@@ -548,7 +567,7 @@ void MainJS()
 						"async function SendConsole(element) {"
 							"let elValue = element.querySelector(\"input[type='text']\").value;"
 							"let values = elValue.split(\" \", 3);"
-							//"console.log(values);"
+							"console.log(values);"
 							"SendCommand(values[0], values[1], values[2], values[3]);"
 						"}"
 
@@ -583,12 +602,3 @@ void MainJS()
 		"</body>"
 	"</html>"));
 }
-
-//void ImageLOGO() {
-//  //wdt_reset();
-//  client.print(F("HTTP/1.1 200 OK"
-//	"Content-Type: image/*"
-//  "Connection: close"
-//
-//  "data:image/x-icon;base64,AAABAAEAICAAAAEACACoCAAAFgAAACgAAAAgAAAAQAAAAAEACAAAAAAAAAQAAAAAAAAAAAAAAAEAAAABAAAAyPwACMr7AERFpwDImwsA/v79APj8/gABw/gA////ANKiAAAeZb4A8vP6AKel1AADvvUAOjWTABSF0gAkU7MA3vj/AChGqwDl5fMADafnAGRhtAByXGAALTiiAFrc/QA91PwAvpQYABCT2gAIte8AHXjJAD9DmwCPcD8A8eGrAH7j/QDL9f8A1aoYAPPqyQDp1IwAtO/+ANLR5wC1t90ASD6CAKOBNgBjUWoAIM77ACrS/ADdtzoA1q4pAJ3k+gCCZ00ALrfsAFFUrwD7+fIAh4O+AHptkQBcTXsAr4giAPny2wDoz3sA0aUPAOXMdgDGw9oA0d/xAHGd1QBRmtgAfnvAAKOVmQBQbbwAYL/qALLK6QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcEBAQEBwcEEjwmBQcHBwcHBwcHBwcHBwcKJgoHBzM4HyQ5OSQfIycUAjQSBwcHBwcHBwcHBwcHBycUEgQjOy06CAgICBkVHTILEgQHBwcHBwcHBwcHBwcHCwI8JC4ICAgICAgDFQ1CQyAQBwcHBwcHBwcHBwcHBwcnAkEuCAgICAgICB4NCTEBARcQBwcHBwcHBwcHBwcHByYdNS4ICAgICAgZKA8TAAAAABcQBwcHBwcHBwcHBwcEJCodKQgICAgICB4NDgAAAAAAASAFBwcHBwcHBwcHByMtKSg2GQgICAgDKg8bAAAAAAAAKyEHBwcHBwcHBwcEJAgDMA0VGQgICDcoDgAAAAAAAAAAIAUHBwcHBwcHBzMtCAgDFQ0VGQgIKR0TAAAAAAAAAAAYEAcHBwcHBwcHIy4ICAgDMCgqNwgeDwwABgYGBgYAACslBwcHBwcHBwcfIggICAgDKSo2MBUPGg4cCQkJHBobAS8HBwcHBwcHBx8iCAgICAgIAx4qDRYPCQkJDxEWFhEcLwcHBwcHBwcEHyIICAgICAgICB4NFg4MDAwMGxMcAhYUJgcHBwcHBwcjIggICAgICAMeHQ4cCRsAAAAAAAExPwIUJgcHBwcHBzgtCAgICAM3FR0OBhMPGgAAAAAAAAAYJzI0BQcHBwoSMzsiOgMpMCgRGgYADAkJDAAAAAAAABcKJwsFBwcHPUBANDU1Ng0WCRMGAAAADhETAAAAAAABLwcFCgcHBwcKCxQyAhEPCRoMAAAAAAAaFg4AAAAAABcQBwcHBwcHBwcFChJEMRsGAAAAAAAAABMRCQYAAAAsJQcHBwcHBwcHBwcHBwclLAAAAAAAAAAAGxEJBgAAKy8FBwcHBwcHBwcHBwcHBwQlGAEAAAAAAAAxAgkGABglBQcHBwcHBwcHBwcHBwcHBwcQICwBAAAAAT8CHCsXIQQHBwcHBwcHBwcHBwcHBwcHBwcFISAXGCwYPh0+IQUHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwUQIT0UFBIHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHCwILBAcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwoLCwoHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"));
-//}

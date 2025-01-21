@@ -108,6 +108,20 @@ void doOperation(String cmd = "", String arg1 = "",
         }
         return;
 	}
+    if (String(cmd) == F("delta_s1")) {
+		if(validateDeltaId(arg1) && validateSensorId(arg2)) {
+            deltas[arg1.toInt() - 1].SetSens1(&sensors[arg2.toInt() - 1]);
+            SaveConfigs();
+        }
+        return;
+	}
+    if (String(cmd) == F("delta_s2")) {
+		if(validateDeltaId(arg1) && validateSensorId(arg2)) {
+            deltas[arg1.toInt() - 1].SetSens2(&sensors[arg2.toInt() - 1]);
+            SaveConfigs();
+        }
+        return;
+	}
 
     if (String(cmd) == F("get_temp")) {
 		readSensors();
