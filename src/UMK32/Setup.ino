@@ -55,11 +55,12 @@ void setup(void) {
     }
 
     Serial.print(F("EEPROM settings read: "));
-    resetMemory();
-    //readMemory();
+  
+    readMemory();
+
     Serial.println(F("OK"));
 
-    //setNetConstants();
+    setNetConstants();
     //wdt_reset();
 
 	Ethernet.init(ETH_PIN_CS);

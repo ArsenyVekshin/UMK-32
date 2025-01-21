@@ -25,6 +25,7 @@
 #define SENSORS_MAX 16
 #define DELTAS_MAX 16
 #define NAMES_MAX_LEN 10
+#define DEVICE_PARAM_MAX_LEN 100
 
 
 // OTHER

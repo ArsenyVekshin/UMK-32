@@ -4,11 +4,11 @@ class minis
 {
 public:
 	#pragma pack(push,1)
-	char text[100];
-	int adr;
+	char text[DEVICE_PARAM_MAX_LEN];
+	int addr;
 	#pragma pack(pop)
 
-	minis(int set_adr);
+	minis(int set_addr);
 
 	void set();
 	void read();
@@ -17,31 +17,29 @@ public:
 	void reset(String Data);
 };
 
-minis::minis(int set_adr)
-{
-	//wdt_reset();
-	adr = set_adr;
+minis::minis(int set_addr) {
+	addr = set_addr;
 }
 
 String minis::toStr()
 {
-	//wdt_reset();
-	return text;
+	return String(text);
 }
 
 void minis::set()
 {
-	//wdt_reset();
-	EEPROM.put(adr, text);
+	for (byte i = 0; i < DEVICE_PARAM_MAX_LEN; i++) {
+		EEPROM.write(addr + i, text[i]);
+	}
+
+	EEPROM.commit();
 }
 
-void minis::reset(String Data)
+void minis::reset(String data)
 {
-	//wdt_reset();
-	for (unsigned int i = 0; i < 100; i++)
-	{
+	for (unsigned int i = 0; i < DEVICE_PARAM_MAX_LEN; i++) {
 		text[i] = NULL;
-		if (i < Data.length()) text[i] = Data[i];
+		if (i < data.length()) text[i] = data[i];
 	}
 	set();
 }
@@ -50,7 +48,7 @@ void minis::reset(String Data)
 void minis::read()
 {
 	//wdt_reset();
-	EEPROM.get(adr, text);
+	EEPROM.get(addr, text);
 }
 
 #pragma pack(push,1)
